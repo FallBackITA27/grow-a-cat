@@ -11,6 +11,7 @@ class Cat {
         this.hunger = 0;
         this.happiness = 100;
         this.energy = 100;
+        this.cleanliness = 100;
         this.age = 0;
         this.name = "Unknown Cat";
     }
@@ -48,8 +49,6 @@ class Cat {
 
                 let dir = Math.sqrt(dx * dx + dy * dy);
 
-                // Se siamo abbastanza vicini alla destinazione,
-                // posizioniamo il gatto esattamente lì e terminiamo il movimento.
                 if (dir <= this.speed * deltaTime) {
 
                     this.x = destination.x;
@@ -57,6 +56,9 @@ class Cat {
 
                     catElement.style.left = this.x + 'px';
                     catElement.style.top = this.y + 'px';
+
+                    catNameHover.style.left = this.x + catElement.clientWidth / 2 + 'px';
+                    catNameHover.style.top = this.y + 'px';
 
                     resolve();
                     return;
@@ -73,6 +75,9 @@ class Cat {
 
                 catElement.style.left = this.x + 'px';
                 catElement.style.top = this.y + 'px';
+
+                catNameHover.style.left = this.x + catElement.clientWidth / 2 + 'px';
+                catNameHover.style.top = this.y + 'px';
 
                 oldCoordinates.x = this.x;
                 oldCoordinates.y = this.y;
@@ -109,6 +114,31 @@ class Cat {
         console.log(this.happiness);
     }
 
+    pet(petAction) {
+        this.happiness += petAction.happiness;
+        this.cleanliness += petAction.cleanliness;
+        if (this.happiness > 100) this.happiness = 100;
+        if (this.cleanliness > 100) this.cleanliness = 100;
+
+        console.log(this.happiness);
+        console.log(this.cleanliness);
+    }
+
+    tires() {
+        this.energy -= 5;
+        if (this.energy < 0) this.energy = 0;
+    }
+
+    getsSad() {
+        this.happiness -= 10;
+        if (this.happiness < 0) this.happiness = 0;
+    }
+
+    getsHungry() {
+        this.hunger += 10;
+        if (this.hunger > 100) this.hunger = 100;
+    }
+
 }
 
 class Food {
@@ -120,8 +150,15 @@ class Food {
     }
 
     dragFood() {
-        //let selectedFood = new Food(food.name, food.hungerValue, food.happiness, food.imageUrl);
+
         foodMenu.classList.remove('open');
+
+
+        const foodPlaceHolder = document.createElement('img');
+        foodPlaceHolder.src = this.imageUrl;
+        foodPlaceHolder.alt = this.name;
+        foodPlaceHolder.classList.add('food-placeholder');
+        document.body.appendChild(foodPlaceHolder);
 
         const pMove = (event) => {
             const mouseX = event.clientX;
@@ -150,14 +187,59 @@ class Food {
             document.removeEventListener('pointerup', pUp);
         }
 
-        const foodPlaceHolder = document.createElement('img');
-        foodPlaceHolder.src = this.imageUrl;
-        foodPlaceHolder.alt = this.name;
-        foodPlaceHolder.classList.add('food-placeholder');
-        document.body.appendChild(foodPlaceHolder);
 
         document.addEventListener("pointermove", pMove)
         document.addEventListener("pointerup", pUp)
     }
 
+}
+
+class PetAction {
+    constructor(name, happiness, cleanliness, imageUrl) {
+        this.name = name;
+        this.happiness = happiness;
+        this.cleanliness = cleanliness;
+        this.imageUrl = imageUrl;
+    }
+
+    dragPetAction() {
+
+
+        const petPlaceHolder = document.createElement('img');
+        petPlaceHolder.src = this.imageUrl;
+        petPlaceHolder.alt = this.name;
+        petPlaceHolder.classList.add('pet-action-placeholder');
+        document.body.appendChild(petPlaceHolder);
+
+        const pMove = (event) => {
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            const petRect = petPlaceHolder.getBoundingClientRect();
+
+            petPlaceHolder.style.left = (mouseX - petRect.width / 2) + 'px';
+            petPlaceHolder.style.top = (mouseY - petRect.height / 2) + 'px';
+        }
+
+        const pUp = (event) => {
+            const catRect = document.getElementById('cat-pet-img').getBoundingClientRect();
+            if (event.clientX > catRect.left &&
+                event.clientX < (catRect.left + catRect.width) &&
+                event.clientY > catRect.top &&
+                event.clientY < (catRect.top + catRect.height)
+            ) {
+                petPlaceHolder.remove();
+                document.removeEventListener('pointermove', pMove);
+                document.removeEventListener('pointerup', pUp);
+                cat.pet(this);
+            }
+            petPlaceHolder.remove();
+            document.removeEventListener('pointermove', pMove);
+            document.removeEventListener('pointerup', pUp);
+        }
+
+
+        document.addEventListener("pointermove", pMove)
+        document.addEventListener("pointerup", pUp)
+    }
 }
