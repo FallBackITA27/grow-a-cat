@@ -10,7 +10,7 @@ function createCatStats(cat) {
     catName.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             cat.name = catName.value;
-            saveCatStats();
+            saveCatStats(cat);
             catName.blur();
         }
     })
