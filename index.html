@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grow a Cat</title>
+        <link rel="icon" href="./assets/cat/catIdle.png" />
+        <link rel="stylesheet" href="style.css" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grow a Cat</title>
-    <link rel="icon" href="./assets/cat/catIdle.png">
-    <link rel="stylesheet" href="style.css">
-</head>
+        <script async defer src="./scripts/classes/Cat.js"></script>
+        <script async defer src="./scripts/classes/Food.js"></script>
+        <script async defer src="./scripts/classes/PetAction.js"></script>
+        <script async defer src="./scripts/systems/saveSystem.js"></script>
+        <script async defer src="./scripts/systems/statSystem.js"></script>
+        <script async defer src="./scripts/UI/catStats.js"></script>
+        <script async defer src="./scripts/UI/foodMenu.js"></script>
+        <script async defer src="./scripts/UI/petMenu.js"></script>
+        <script async defer src="./scripts/mainScript.js"></script>
+    </head>
 
-<body>
-    <h1>Grow a Cat</h1>
-    <div id="game-container">
-        
-        <div id="cat-container">
-            <button id="go-to-sleep">Go to sleep</button>
-            <img id="cat" src="./assets/cat/catIdle.png" alt="Cat">
-            <p id="cat-name"></p>
+    <body>
+        <h1>Grow a Cat</h1>
+        <div id="game-container">
+            <div id="cat-container">
+                <button id="go-to-sleep">Go to sleep</button>
+                <img id="cat" src="./assets/cat/catIdle.png" alt="Cat" />
+                <p id="cat-name"></p>
+            </div>
+            <div id="actions">
+                <button class="action-button" id="feed-button">Feed</button>
+                <button class="action-button" id="play-button">Play</button>
+                <button class="action-button" id="pet-button">Pet</button>
+            </div>
+            <div id="food-menu"></div>
+            <div id="pet-menu"></div>
+            <div id="cat-stats"></div>
         </div>
-        <div id="actions">
-            <button class="action-button" id="feed-button">Feed</button>
-            <button class="action-button" id="play-button">Play</button>
-            <button class="action-button" id="pet-button">Pet</button>
-        </div>
-        <div id="food-menu"></div>
-        <div id="pet-menu"></div>
-        <div id="cat-stats"></div>
-    </div>
-</body>
-<script src="./scripts/classes/Cat.js"></script>
-<script src="./scripts/classes/Food.js"></script>
-<script src="./scripts/classes/PetAction.js"></script>
-<script src="./scripts/systems/saveSystem.js"></script>
-<script src="./scripts/systems/statSystem.js"></script>
-<script src="./scripts/UI/catStats.js"></script>
-<script src="./scripts/UI/foodMenu.js"></script>
-<script src="./scripts/UI/petMenu.js"></script>
-<script src="./scripts/mainScript.js"></script>
-
+    </body>
 </html>
