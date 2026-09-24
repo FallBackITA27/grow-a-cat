@@ -79,7 +79,6 @@ img {
 }
 
 #cat-name {
-
     text-align: center;
     font-size: clamp(16px, 2vw, 24px);
 
@@ -89,6 +88,10 @@ img {
     transform: translate(-50%, -100%);
 
     pointer-events: none;
+}
+
+#cat:not(:hover) + #cat-name {
+	display: none;
 }
 
 

@@ -12,6 +12,7 @@ const catRect = catElement.getBoundingClientRect();
 
 let cat = loadCat();
 //let cat = new Cat();
+catNameHover.innerText = cat.name;
 
 sleepButton.addEventListener('click', () => {
     cat.isAsleep = true;
@@ -24,12 +25,6 @@ catElement.addEventListener('click', (event) => {
     if (catStats.classList.contains('open')) {
         updateCatStats(cat);
     }
-});
-catElement.addEventListener('mouseenter', (event) => {
-    catNameHover.innerText = cat.name;
-});
-catElement.addEventListener('mouseleave', (event) => {
-    catNameHover.innerText = "";
 });
 document.addEventListener('click', (event) => {
 
