@@ -7,12 +7,10 @@ class PetAction {
     }
 
     dragPetAction() {
-
-
-        const petPlaceHolder = document.createElement('img');
+        const petPlaceHolder = document.createElement("img");
         petPlaceHolder.src = this.imageUrl;
         petPlaceHolder.alt = this.name;
-        petPlaceHolder.classList.add('pet-action-placeholder');
+        petPlaceHolder.classList.add("pet-action-placeholder");
         document.body.appendChild(petPlaceHolder);
 
         const pMove = (event) => {
@@ -21,26 +19,28 @@ class PetAction {
 
             const petRect = petPlaceHolder.getBoundingClientRect();
 
-            petPlaceHolder.style.left = (mouseX - petRect.width / 2) + 'px';
-            petPlaceHolder.style.top = (mouseY - petRect.height / 2) + 'px';
-        }
+            petPlaceHolder.style.left = mouseX - petRect.width / 2 + "px";
+            petPlaceHolder.style.top = mouseY - petRect.height / 2 + "px";
+        };
 
         const pUp = (event) => {
-            const catRect = document.getElementById('cat-pet-img').getBoundingClientRect();
-            if (event.clientX > catRect.left &&
-                event.clientX < (catRect.left + catRect.width) &&
+            const catRect = document
+                .getElementById("cat-pet-img")
+                .getBoundingClientRect();
+            if (
+                event.clientX > catRect.left &&
+                event.clientX < catRect.left + catRect.width &&
                 event.clientY > catRect.top &&
-                event.clientY < (catRect.top + catRect.height)
+                event.clientY < catRect.top + catRect.height
             ) {
                 cat.pet(this);
             }
             petPlaceHolder.remove();
-            document.removeEventListener('pointermove', pMove);
-            document.removeEventListener('pointerup', pUp);
-        }
+            document.removeEventListener("pointermove", pMove);
+            document.removeEventListener("pointerup", pUp);
+        };
 
-
-        document.addEventListener("pointermove", pMove)
-        document.addEventListener("pointerup", pUp)
+        document.addEventListener("pointermove", pMove);
+        document.addEventListener("pointerup", pUp);
     }
 }

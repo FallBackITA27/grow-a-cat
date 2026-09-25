@@ -12,7 +12,6 @@ function millisecsToMinutes(millisecs) {
 }
 
 function checkCatStats(cat) {
-
     if (cat.energy < 50 && hungerInterval === null) {
         hungerInterval = setInterval(() => {
             cat.getsHungry();
@@ -41,8 +40,7 @@ function checkCatStats(cat) {
         cat.isAsleep = true;
     }
 
-    if (cat.energy >= 100 && cat.isAsleep)
-        cat.isAsleep = false;
+    if (cat.energy >= 100 && cat.isAsleep) cat.isAsleep = false;
 
     if (cat.energy > 100) cat.energy = 100;
     if (cat.energy < 0) cat.energy = 0;
@@ -52,7 +50,6 @@ function checkCatStats(cat) {
     if (cat.cleanliness < 0) cat.cleanliness = 0;
     if (cat.hunger < 0) cat.hunger = 0;
     if (cat.hunger > 100) cat.hunger = 100;
-
 }
 
 let minutesAway = 0;
@@ -73,7 +70,7 @@ function updateStatsAfterTimeAway(cat, timeAway) {
         cat.happiness -= 10 * Math.floor(halfHoursAway / 3);
 
         if (cat.energy < 50) {
-            cat.hunger += 10 * halfHoursAway;;
+            cat.hunger += 10 * halfHoursAway;
         }
 
         if (cat.hunger === 100) {
@@ -97,18 +94,17 @@ function updateStatsAfterTimeAway(cat, timeAway) {
 let lastSavedTime = Date.now();
 let timeAway = 0;
 
-
 document.addEventListener("close", () => {
-        lastSavedTime = Date.now();
-        localStorage.setItem('lastSavedTime', lastSavedTime);
-        saveCatStats(cat);
+    lastSavedTime = Date.now();
+    localStorage.setItem("lastSavedTime", lastSavedTime);
+    saveCatStats(cat);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-        lastSavedTime = localStorage.getItem('lastSavedTime');
-        if (lastSavedTime !== null) {
-            timeAway = Date.now() - Number(lastSavedTime);
-            updateStatsAfterTimeAway(cat, timeAway);
-            lastSavedTime = undefined;
-        }
+    lastSavedTime = localStorage.getItem("lastSavedTime");
+    if (lastSavedTime !== null) {
+        timeAway = Date.now() - Number(lastSavedTime);
+        updateStatsAfterTimeAway(cat, timeAway);
+        lastSavedTime = undefined;
+    }
 });

@@ -11,30 +11,30 @@ class Cat {
         this.name = "Unknown Cat";
         this.isAsleep = false;
 
-		this.updateGraphics();
+        this.updateGraphics();
 
-		let _isRunningMovingLoop = false;
-		setInterval(async () => {
-			if (this.isAsleep || _isRunningMovingLoop) return;
+        let _isRunningMovingLoop = false;
+        setInterval(async () => {
+            if (this.isAsleep || _isRunningMovingLoop) return;
 
-			const delay = ms => new Promise(res => setTimeout(res, ms));
-        	const waitTime = Math.floor(Math.random() * 5000);
+            const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+            const waitTime = Math.floor(Math.random() * 5000);
 
-			_isRunningMovingLoop = true;
-			await delay(waitTime);
-			_isRunningMovingLoop = false;
+            _isRunningMovingLoop = true;
+            await delay(waitTime);
+            _isRunningMovingLoop = false;
 
-			this.x = Math.random() * 100;
-			this.y = Math.random() * 100;
+            this.x = Math.random() * 100;
+            this.y = Math.random() * 100;
 
-			this.updateGraphics();
-		}, 1100); // Questa attesa deve essere più dell'animazione in CSS.
+            this.updateGraphics();
+        }, 1100); // Questa attesa deve essere più dell'animazione in CSS.
     }
 
-	updateGraphics() {
-		catBox.style.top = `min(${this.x}%, calc(100% - ${catBox.offsetWidth}px))`;
-		catBox.style.left = `min(${this.y}%, calc(100% - ${catBox.offsetHeight}px))`;
-	}
+    updateGraphics() {
+        catBox.style.top = `min(${this.x}%, calc(100% - ${catBox.offsetWidth}px))`;
+        catBox.style.left = `min(${this.y}%, calc(100% - ${catBox.offsetHeight}px))`;
+    }
 
     feed(food) {
         if (!this.isAsleep) {
@@ -62,7 +62,6 @@ class Cat {
     tires() {
         this.energy -= 5;
         if (this.energy < 0) this.energy = 0;
-
     }
 
     rests() {
@@ -71,10 +70,8 @@ class Cat {
     }
 
     getsSad() {
-
         this.happiness -= 10;
         if (this.happiness < 0) this.happiness = 0;
-
     }
 
     getsHungry() {
@@ -87,23 +84,18 @@ class Cat {
         if (this.cleanliness < 0) this.cleanliness = 0;
     }
 
-
     updateAge() {
         let now = Date.now();
         let daysPassed = (now - this.lastBirthday) / (24 * 60 * 60 * 1000);
 
         if (daysPassed >= 15) {
-
             let ageInc = Math.floor(daysPassed / 15);
 
             this.age += ageInc;
             this.lastBirthday += ageInc * 15 * 24 * 60 * 60 * 1000;
-
         }
 
         saveCatStats(this);
         updateCatStats(this);
-
-
     }
 }
