@@ -1,4 +1,5 @@
 const catElement = document.getElementById('cat');
+const catBox = document.getElementById('cat-box')
 const feedButton = document.getElementById('feed-button');
 const petButton = document.getElementById('pet-button');
 const gameArea = document.getElementById('cat-container');
@@ -38,9 +39,6 @@ document.addEventListener('click', (event) => {
 
 });
 
-catElement.style.left = cat.x + 'px';
-catElement.style.top = cat.y + 'px';
-
 createCatStats(cat);
 createFoodMenu();
 createPetMenu();
@@ -74,5 +72,3 @@ setInterval(() => {
     lastSavedTime = Date.now();
     localStorage.setItem('lastSavedTime', lastSavedTime);
 }, minsToMillisecs(1));
-
-cat.idleCat()

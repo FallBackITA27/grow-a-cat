@@ -41,10 +41,8 @@ function checkCatStats(cat) {
         cat.isAsleep = true;
     }
 
-    if (cat.energy >= 100 && cat.isAsleep) {
+    if (cat.energy >= 100 && cat.isAsleep)
         cat.isAsleep = false;
-        cat.idleCat();
-    }
 
     if (cat.energy > 100) cat.energy = 100;
     if (cat.energy < 0) cat.energy = 0;
@@ -61,7 +59,6 @@ let minutesAway = 0;
 let halfHoursAway = 0;
 
 function updateStatsAfterTimeAway(cat, timeAway) {
-
     if (isNaN(timeAway)) return;
     minutesAway = millisecsToMinutes(timeAway);
     halfHoursAway = Math.floor(minutesAway / 30);
@@ -70,12 +67,7 @@ function updateStatsAfterTimeAway(cat, timeAway) {
         halfHoursAway = Math.floor((cat.energy - 100) / 10);
         if (cat.energy > 100) cat.energy = 100;
         if (cat.energy === 100) cat.isAsleep = false;
-    }
-
-
-
-    if (!cat.isAsleep) {
-
+    } else {
         cat.energy -= 5 * halfHoursAway;
         cat.cleanliness -= 5 * halfHoursAway;
         cat.happiness -= 10 * Math.floor(halfHoursAway / 3);
@@ -96,10 +88,8 @@ function updateStatsAfterTimeAway(cat, timeAway) {
         if (cat.energy === 0) {
             cat.isAsleep = true;
         }
-
-
-
     }
+
     saveCatStats(cat);
     updateCatStats(cat);
 }
@@ -107,18 +97,18 @@ function updateStatsAfterTimeAway(cat, timeAway) {
 let lastSavedTime = Date.now();
 let timeAway = 0;
 
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
+
+document.addEventListener("close", () => {
         lastSavedTime = Date.now();
         localStorage.setItem('lastSavedTime', lastSavedTime);
         saveCatStats(cat);
-    } else {
+});
+
+document.addEventListener("DOMContentLoaded", () => {
         lastSavedTime = localStorage.getItem('lastSavedTime');
         if (lastSavedTime !== null) {
             timeAway = Date.now() - Number(lastSavedTime);
-            cat = loadCat();
             updateStatsAfterTimeAway(cat, timeAway);
             lastSavedTime = undefined;
         }
-    }
 });

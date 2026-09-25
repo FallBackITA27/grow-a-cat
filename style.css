@@ -78,19 +78,21 @@ img {
     display: flex;
 }
 
+#cat-box {
+	position: absolute;
+	transition: all linear 1s;
+}
+
 #cat-name {
     text-align: center;
     font-size: clamp(16px, 2vw, 24px);
 
-    position: absolute;
     margin: 0;
-
-    transform: translate(-50%, -100%);
 
     pointer-events: none;
 }
 
-#cat:not(:hover) + #cat-name {
+#cat-name:has(+ #cat:not(:hover)) {
 	display: none;
 }
 
@@ -356,9 +358,9 @@ h1 {
 }
 
 #cat {
-    position: absolute;
-    width: 15%;
-    height: auto;
+    width: 5vw;
+	aspect-ratio: 1/1;
+
     image-rendering: pixelated;
 }
 

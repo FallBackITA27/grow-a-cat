@@ -1,9 +1,7 @@
 class Cat {
     constructor() {
-        // Velocità espressa in pixel al secondo
-        this.speed = 0.3 * gameArea.clientWidth;
-        this.x = Math.floor(gameArea.clientWidth / 2) - Math.floor(catRect.width / 2);
-        this.y = Math.floor(gameArea.clientHeight / 2) - Math.floor(catRect.height / 2);
+        this.x = Math.floor(catRect.width / 2);
+        this.y = Math.floor(catRect.height / 2);
         this.hunger = 0;
         this.happiness = 100;
         this.energy = 100;
@@ -12,97 +10,31 @@ class Cat {
         this.lastBirthday = Date.now();
         this.name = "Unknown Cat";
         this.isAsleep = false;
+
+		this.updateGraphics();
+
+		let _isRunningMovingLoop = false;
+		setInterval(async () => {
+			if (this.isAsleep || _isRunningMovingLoop) return;
+
+			const delay = ms => new Promise(res => setTimeout(res, ms));
+        	const waitTime = Math.floor(Math.random() * 5000);
+
+			_isRunningMovingLoop = true;
+			await delay(waitTime);
+			_isRunningMovingLoop = false;
+
+			this.x = Math.random() * 100;
+			this.y = Math.random() * 100;
+
+			this.updateGraphics();
+		}, 1100); // Questa attesa deve essere più dell'animazione in CSS.
     }
 
-    async moveCat() {
-
-        let oldCoordinates = {
-            x: this.x,
-            y: this.y
-        };
-
-        let destination = {
-            x: Math.floor(
-                Math.random() *
-                (gameArea.clientWidth - catElement.clientWidth)
-            ),
-            y: Math.floor(
-                Math.random() *
-                (gameArea.clientHeight - catElement.clientHeight)
-            )
-        };
-
-        return new Promise((resolve) => {
-
-            let lastTime = performance.now();
-
-            const move = (timestamp) => {
-
-                // Tempo trascorso dall'ultimo frame, in secondi
-                let deltaTime = (timestamp - lastTime) / 1000;
-                lastTime = timestamp;
-
-                let dx = destination.x - oldCoordinates.x;
-                let dy = destination.y - oldCoordinates.y;
-
-                let dir = Math.sqrt(dx * dx + dy * dy);
-
-                if (dir <= this.speed * deltaTime) {
-
-                    this.x = destination.x;
-                    this.y = destination.y;
-
-                    catElement.style.left = this.x + 'px';
-                    catElement.style.top = this.y + 'px';
-
-                    catNameHover.style.left = this.x + catElement.clientWidth / 2 + 'px';
-                    catNameHover.style.top = this.y + 'px';
-
-                    resolve();
-                    return;
-                }
-
-                let directionX = dx / dir;
-                let directionY = dy / dir;
-
-                // La distanza percorsa dipende dal tempo trascorso.
-                let movement = this.speed * deltaTime;
-
-                this.x = oldCoordinates.x + directionX * movement;
-                this.y = oldCoordinates.y + directionY * movement;
-
-                catElement.style.left = this.x + 'px';
-                catElement.style.top = this.y + 'px';
-
-                catNameHover.style.left = this.x + catElement.clientWidth / 2 + 'px';
-                catNameHover.style.top = this.y + 'px';
-
-                oldCoordinates.x = this.x;
-                oldCoordinates.y = this.y;
-
-                requestAnimationFrame(move);
-            }
-
-            requestAnimationFrame(move);
-        });
-    }
-
-    idleCat() {
-
-        let waitTime = Math.floor(Math.random() * 5000);
-
-        if (!this.isAsleep) {
-            this.moveCat().then(() => {
-
-                setTimeout(() => {
-
-                    this.idleCat();
-
-                }, waitTime);
-
-            });
-        }
-    }
+	updateGraphics() {
+		catBox.style.top = `min(${this.x}%, calc(100% - ${catBox.offsetWidth}px))`;
+		catBox.style.left = `min(${this.y}%, calc(100% - ${catBox.offsetHeight}px))`;
+	}
 
     feed(food) {
         if (!this.isAsleep) {
@@ -174,5 +106,4 @@ class Cat {
 
 
     }
-
 }
