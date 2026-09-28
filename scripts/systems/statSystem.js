@@ -112,13 +112,16 @@ document.addEventListener('visibilitychange', () => {
         lastSavedTime = Date.now();
         localStorage.setItem('lastSavedTime', lastSavedTime);
         saveCatStats(cat);
-    } else {
-        lastSavedTime = localStorage.getItem('lastSavedTime');
+    }
+   
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+         lastSavedTime = localStorage.getItem('lastSavedTime');
         if (lastSavedTime !== null) {
             timeAway = Date.now() - Number(lastSavedTime);
-            cat = loadCat();
+
             updateStatsAfterTimeAway(cat, timeAway);
             lastSavedTime = undefined;
         }
-    }
-});
+    });
