@@ -117,7 +117,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-         lastSavedTime = localStorage.getItem('lastSavedTime');
+        lastSavedTime = localStorage.getItem('lastSavedTime');
         if (lastSavedTime !== null) {
             timeAway = Date.now() - Number(lastSavedTime);
 

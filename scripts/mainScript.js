@@ -11,6 +11,14 @@ const catNameHover = document.getElementById('cat-name');
 const catRect = catElement.getBoundingClientRect();
 
 let cat = loadCat();
+
+lastSavedTime = localStorage.getItem('lastSavedTime');
+if (lastSavedTime !== null) {
+    timeAway = Date.now() - Number(lastSavedTime);
+
+    updateStatsAfterTimeAway(cat, timeAway);
+    lastSavedTime = undefined;
+}
 //let cat = new Cat();
 catNameHover.innerText = cat.name;
 
