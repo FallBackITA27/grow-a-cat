@@ -12,13 +12,7 @@ const catRect = catElement.getBoundingClientRect();
 
 let cat = loadCat();
 
-lastSavedTime = localStorage.getItem('lastSavedTime');
-if (lastSavedTime !== null) {
-    timeAway = Date.now() - Number(lastSavedTime);
 
-    updateStatsAfterTimeAway(cat, timeAway);
-    lastSavedTime = undefined;
-}
 //let cat = new Cat();
 catNameHover.innerText = cat.name;
 
@@ -52,6 +46,14 @@ catElement.style.top = cat.y + 'px';
 createCatStats(cat);
 createFoodMenu();
 createPetMenu();
+
+lastSavedTime = localStorage.getItem('lastSavedTime');
+if (lastSavedTime !== null) {
+    timeAway = Date.now() - Number(lastSavedTime);
+
+    updateStatsAfterTimeAway(cat, timeAway);
+    lastSavedTime = undefined;
+}
 
 setInterval(() => {
     if (!cat.isAsleep) {

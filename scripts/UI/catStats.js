@@ -17,7 +17,7 @@ function createCatStats(cat) {
 
     const catAge = document.createElement('p');
     catAge.innerText = "Age : " + cat.age;
-    catAge.id = 'cat-age';
+    catAge.id = "cat-age";
     catStats.appendChild(catAge);
 
     const statsContent = document.createElement('div');
@@ -43,7 +43,7 @@ function createCatStats(cat) {
 }
 
 function updateCatStats(cat) {
-    document.getElementById('cat-age').innerText = "Age : " + cat.age;
+    document.getElementById("cat-age").innerText = "Age : " + cat.age;
 
     document.getElementsByClassName('name-of-cat')[0].value = cat.name
 
