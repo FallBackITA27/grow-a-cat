@@ -47,14 +47,6 @@ createCatStats(cat);
 createFoodMenu();
 createPetMenu();
 
-lastSavedTime = localStorage.getItem('lastSavedTime');
-if (lastSavedTime !== null) {
-    timeAway = Date.now() - Number(lastSavedTime);
-
-    updateStatsAfterTimeAway(cat, timeAway);
-    lastSavedTime = undefined;
-}
-
 setInterval(() => {
     if (!cat.isAsleep) {
         cat.tires();
