@@ -157,9 +157,26 @@ img {
     background-repeat: no-repeat;
     background-size: 160px 150px;
 
+    background-image: url("/assets/UI/bars.png");
     background-position: 0 0;
 
     image-rendering: pixelated;
+}
+
+.bar-container.l1 {
+    background-position-y: 0;
+}
+.bar-container.l2 {
+    background-position-y: -30px;
+}
+.bar-container.l3 {
+    background-position-y: -60px;
+}
+.bar-container.l4 {
+    background-position-y: -90px;
+}
+.bar-container.l5 {
+    background-position-y: -120px;
 }
 
 @media (max-width: 500px) {

@@ -15,7 +15,6 @@ function checkCatStats(cat) {
     if (cat.energy < 50 && hungerInterval === null) {
         hungerInterval = setInterval(() => {
             cat.getsHungry();
-            updateCatStats(cat);
         }, minsToMillisecs(30));
     }
 
@@ -27,7 +26,6 @@ function checkCatStats(cat) {
     if (cat.hunger === 100 && energyInterval === null) {
         energyInterval = setInterval(() => {
             cat.tires();
-            updateCatStats(cat);
         }, minsToMillisecs(30));
     }
 
@@ -88,5 +86,4 @@ function updateStatsAfterTimeAway(cat, timeAway) {
     }
 
     saveCatStats(cat);
-    updateCatStats(cat);
 }

@@ -8,7 +8,7 @@ class Cat {
         this.cleanliness = 100;
         this.age = 0;
         this.lastBirthday = Date.now();
-        this.name = "Unknown Cat";
+        this._name = "Unknown Cat";
         this.isAsleep = false;
 
         this.updateGraphics();
@@ -34,6 +34,28 @@ class Cat {
     updateGraphics() {
         catBox.style.top = `min(${this.x}%, calc(100% - ${catBox.offsetWidth}px))`;
         catBox.style.left = `min(${this.y}%, calc(100% - ${catBox.offsetHeight}px))`;
+        catNameHover.textContent = this._name;
+        catAge.textContent = `Age: ${this.age}`;
+
+        const updBar = (id, val) => {
+            const element = document.getElementById(id);
+            element.classList.remove("l1", "l2", "l3", "l4", "l5");
+            element.classList.add(
+                val === 0
+                    ? "l1"
+                    : val <= 25
+                      ? "l2"
+                      : val <= 50
+                        ? "l3"
+                        : val <= 75
+                          ? "l4"
+                          : "l5",
+            );
+        };
+        updBar("cat-happiness", this.happiness);
+        updBar("cat-hunger", 100 - this.hunger);
+        updBar("cat-energy", this.energy);
+        updBar("cat-cleanliness", this.cleanliness);
     }
 
     feed(food) {
@@ -96,6 +118,15 @@ class Cat {
         }
 
         saveCatStats(this);
-        updateCatStats(this);
+    }
+
+    set name(v) {
+        this._name = v;
+        this.updateGraphics();
+        saveCatStats(this);
+    }
+
+    get name() {
+        return this._name;
     }
 }
