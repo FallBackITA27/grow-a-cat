@@ -77,4 +77,18 @@ setInterval(() => {
     localStorage.setItem('lastSavedTime', lastSavedTime);
 }, minsToMillisecs(1));
 
+
+document.addEventListener("close", () => {
+    const lastSavedTime = Date.now();
+    localStorage.setItem("lastSavedTime", lastSavedTime);
+    saveCatStats(cat);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const lastSavedTime = localStorage.getItem("lastSavedTime");
+    if (lastSavedTime == null) return;
+    const timeAway = Date.now() - Number(lastSavedTime);
+    updateStatsAfterTimeAway(cat, timeAway);
+});
+
 cat.idleCat()

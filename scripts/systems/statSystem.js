@@ -103,25 +103,3 @@ function updateStatsAfterTimeAway(cat, timeAway) {
     saveCatStats(cat);
     updateCatStats(cat);
 }
-
-let lastSavedTime = Date.now();
-let timeAway = 0;
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-        lastSavedTime = Date.now();
-        localStorage.setItem('lastSavedTime', lastSavedTime);
-        saveCatStats(cat);
-    }
-   
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-        lastSavedTime = localStorage.getItem('lastSavedTime');
-        if (lastSavedTime !== null) {
-            timeAway = Date.now() - Number(lastSavedTime);
-
-            updateStatsAfterTimeAway(cat, timeAway);
-            lastSavedTime = undefined;
-        }
-    });
