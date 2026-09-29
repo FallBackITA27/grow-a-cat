@@ -1,7 +1,9 @@
 class Cat {
     constructor() {
-        this.x = Math.floor(catRect.width / 2);
-        this.y = Math.floor(catRect.height / 2);
+        // X and Y are a percentage relative to the width and height of catRect
+        // 50,50 means the top left corner of catBox is in the center of catRect.
+        this.x = 50;
+        this.y = 50;
         this.hunger = 0;
         this.happiness = 100;
         this.energy = 100;
@@ -10,6 +12,7 @@ class Cat {
         this.lastBirthday = Date.now();
         this._name = "Unknown Cat";
         this.isAsleep = false;
+        this._timeToMove = 1;
 
         this.updateGraphics();
 
@@ -21,17 +24,29 @@ class Cat {
             const waitTime = Math.floor(Math.random() * 5000);
 
             _isRunningMovingLoop = true;
-            await delay(waitTime);
+
+            const [nextX, nextY] = [Math.random() * 100, Math.random() * 100];
+            // 33% / 1 rapporto distanza/tempo
+            // 33 : 1 = DIST : TEMPO
+            // (1*DIST) / 33 = TEMPO
+            const [percentageX, percentageY] = [nextX - this.x, nextY - this.y];
+            const distanceInPercentage = Math.sqrt(
+                Math.pow(percentageX, 2) + Math.pow(percentageY, 2),
+            );
+            this._timeToMove = distanceInPercentage / 33;
+
+            await delay(waitTime + this._timeToMove);
             _isRunningMovingLoop = false;
 
-            this.x = Math.random() * 100;
-            this.y = Math.random() * 100;
+            this.x = nextX;
+            this.y = nextY;
 
             this.updateGraphics();
         }, 1100); // Questa attesa deve essere più dell'animazione in CSS.
     }
 
     updateGraphics() {
+        catBox.style.transition = `all ${this._timeToMove}s linear`;
         catBox.style.top = `min(${this.x}%, calc(100% - ${catBox.offsetWidth}px))`;
         catBox.style.left = `min(${this.y}%, calc(100% - ${catBox.offsetHeight}px))`;
         catNameHover.textContent = this._name;
