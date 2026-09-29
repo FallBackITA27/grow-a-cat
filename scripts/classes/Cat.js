@@ -19,11 +19,10 @@ class Cat {
         let _isRunningMovingLoop = false;
         setInterval(async () => {
             if (this.isAsleep || _isRunningMovingLoop) return;
+            _isRunningMovingLoop = true;
 
             const delay = (ms) => new Promise((res) => setTimeout(res, ms));
             const waitTime = Math.floor(Math.random() * 5000);
-
-            _isRunningMovingLoop = true;
 
             const [nextX, nextY] = [Math.random() * 100, Math.random() * 100];
             // 33% / 1 rapporto distanza/tempo
@@ -57,14 +56,14 @@ class Cat {
             element.classList.remove("l1", "l2", "l3", "l4", "l5");
             element.classList.add(
                 val === 0
-                    ? "l1"
+                    ? "l5"
                     : val <= 25
-                      ? "l2"
+                      ? "l4"
                       : val <= 50
                         ? "l3"
                         : val <= 75
-                          ? "l4"
-                          : "l5",
+                          ? "l2"
+                          : "l1",
             );
         };
         updBar("cat-happiness", this.happiness);
