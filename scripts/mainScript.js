@@ -14,7 +14,10 @@ const catAge = document.getElementById("cat-age");
 const catRect = catElement.getBoundingClientRect();
 
 let cat = loadCat();
+
+
 //let cat = new Cat();
+catNameHover.innerText = cat.name;
 
 sleepButton.addEventListener("click", () => {
     cat.isAsleep = true;
